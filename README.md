@@ -19,6 +19,10 @@ The API requires the following headers for authentication:
 
 ./example-request.json
 
+### Example Usage
+
+[Watch Video](https://www.loom.com/share/3b0dbdf9bf1940309c8fc64540f1e38a?sid=0db8ca5d-adb2-49f8-8f56-8765054149f8)
+
 
 ### Installation
 
