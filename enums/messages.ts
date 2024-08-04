@@ -8,6 +8,8 @@ const ERROR = {
         EMAIL: 'Email not found!',
         PASSWORD: 'Password not found!',
         SERVICE: 'Service not found!',
+        PARAMETER: 'Parameter not found!',
+        ROLE: 'Role not found!',
     },
     INVALID: {
         REQUEST: 'Invalid Request!',
@@ -23,6 +25,7 @@ const ERROR = {
     },
     AUTH: {
         UNAUTHRIZED: 'Unauthorized!',
+        UNAUTHRIZED_USE : 'Unauthorized Use!',
     },
     WRONG: {
         PASSWORD: 'Wrong Password!',
@@ -31,7 +34,9 @@ const ERROR = {
         REGISTER: 'register Function Error!',
         LOGIN: 'login Function Error!',
         GET_BALANCE: 'getBalance Function Error!',
+        GET_ALL_BALANCE: 'getAllBalance Function Error!',
         BALANCE_TRANSFER: 'balanceTransfer Function Error!',
+        LOAD_CREDIT: 'loadCredit Function Error!',
     },
     ACCOUNTING: {
         FUNDS: 'Insufficient funds!',

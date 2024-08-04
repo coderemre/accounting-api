@@ -164,8 +164,6 @@ export class User {
 
             return response;
         } catch (error) {
-            console.log(error);
-
             return { error: true, message: ERROR.INVALID.REQUEST };
         }
     }

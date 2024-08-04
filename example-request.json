@@ -26,21 +26,22 @@
 					},
 					{
 						"key": "userAuth",
-						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTUsInVzZXJfaWQiOiIzZmQ0MGM0Ni01OTQyLTRkNmItYTliZS1hYjJhMzE2MTY0NjAiLCJyb2xlIjoiYWRtaW4iLCJlbWFpbCI6InRlc3RAY29kZXJlbXJlMi5kZXYiLCJuYW1lIjoiRW1yZSIsImxhc3RuYW1lIjoiQmFidXIiLCJpYXQiOjE3MjAzODczMDJ9.SOETxHHYwtv6RZr2alajM2cSnGzWPry3x55Dmx5rcVY",
-						"type": "text"
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTYsInVzZXJfaWQiOiI4Mjk0N2I4OS1jZTgxLTRhZjgtOGM1NS0wMTEwMjZiMGIwMGMiLCJyb2xlIjoiYWRtaW4iLCJlbWFpbCI6InRlc3RAdXNlci5jb20iLCJuYW1lIjoiRW1yZSIsImxhc3RuYW1lIjoiQmFidXIiLCJpYXQiOjE3MjA1MDYzNjd9.HZqL7VMWrRno2KBJMiNhKcObkzVg1A7DUZxhstOGwm8",
+						"type": "text",
+						"disabled": true
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"action\": \"login\",\n\t\"email\":\"test@coderemrea.dev\",\n\t\"password\": \"emrebabur\"\n}"
+					"raw": "{\n\t\"action\": \"login\",\n\t\"email\":\"test@user.com\",\n\t\"password\": \"emrebabur\"\n}"
 				},
 				"url": {
-					"raw": "http://localhost:3636/user",
+					"raw": "http://localhost:3638/user",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "3636",
+					"port": "3638",
 					"path": [
 						"user"
 					]
@@ -68,13 +69,97 @@
 					},
 					{
 						"key": "userAuth",
-						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTUsInVzZXJfaWQiOiIzZmQ0MGM0Ni01OTQyLTRkNmItYTliZS1hYjJhMzE2MTY0NjAiLCJyb2xlIjoiYWRtaW4iLCJlbWFpbCI6InRlc3RAY29kZXJlbXJlMi5kZXYiLCJuYW1lIjoiRW1yZSIsImxhc3RuYW1lIjoiQmFidXIiLCJpYXQiOjE3MjAzODczMDJ9.SOETxHHYwtv6RZr2alajM2cSnGzWPry3x55Dmx5rcVY",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTYsInVzZXJfaWQiOiI4Mjk0N2I4OS1jZTgxLTRhZjgtOGM1NS0wMTEwMjZiMGIwMGMiLCJyb2xlIjoiYWRtaW4iLCJlbWFpbCI6InRlc3RAdXNlci5jb20iLCJuYW1lIjoiRW1yZSIsImxhc3RuYW1lIjoiQmFidXIiLCJpYXQiOjE3MjIxMjExMTB9.cArscXyQKAnhHZO5_4b-qjhUUHLPcFjWojLu4Jil8Vs",
 						"type": "text"
 					}
 				],
 				"body": {
 					"mode": "raw",
 					"raw": "{\n\t\"action\": \"getBalance\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:3638/accounting",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3638",
+					"path": [
+						"accounting"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Balance",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "appname",
+						"value": "blotuscode"
+					},
+					{
+						"key": "token",
+						"value": "kLGDLKHAGKLJhaslkjhagdkjb",
+						"type": "text"
+					},
+					{
+						"key": "userAuth",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTcsInVzZXJfaWQiOiJjNTUwNmMyNS1hZWQ3LTQxYTQtODhmYS00ZjhlNTI3ZjIxM2UiLCJyb2xlIjoiY3VzdG9tZXIiLCJlbWFpbCI6ImN1c3RvbWVyQHVzZXIuY29tIiwibmFtZSI6IkVtcmUiLCJsYXN0bmFtZSI6IkJhYnVyIiwiaWF0IjoxNzIyMTIxMjU0fQ._GV-XMrC6D5aqarTukJcldxQEBdRrEtQrY828dSAwMg",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"action\": \"getAllBalance\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:3638/accounting",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3638",
+					"path": [
+						"accounting"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Balance",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "appname",
+						"value": "blotuscode"
+					},
+					{
+						"key": "token",
+						"value": "kLGDLKHAGKLJhaslkjhagdkjb",
+						"type": "text"
+					},
+					{
+						"key": "userAuth",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTYsInVzZXJfaWQiOiI4Mjk0N2I4OS1jZTgxLTRhZjgtOGM1NS0wMTEwMjZiMGIwMGMiLCJyb2xlIjoiYWRtaW4iLCJlbWFpbCI6InRlc3RAdXNlci5jb20iLCJuYW1lIjoiRW1yZSIsImxhc3RuYW1lIjoiQmFidXIiLCJpYXQiOjE3MjIxMjExMTB9.cArscXyQKAnhHZO5_4b-qjhUUHLPcFjWojLu4Jil8Vs",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"action\": \"loadCredit\",\n    \"user_id\": \"c5506c25-aed7-41a4-88fa-4f8e527f213e\"\n    //\"balanceValueToUpdate\": 250\n}"
 				},
 				"url": {
 					"raw": "http://localhost:3638/accounting",
@@ -110,13 +195,13 @@
 					},
 					{
 						"key": "userAuth",
-						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTUsInVzZXJfaWQiOiIzZmQ0MGM0Ni01OTQyLTRkNmItYTliZS1hYjJhMzE2MTY0NjAiLCJyb2xlIjoiYWRtaW4iLCJlbWFpbCI6InRlc3RAY29kZXJlbXJlMi5kZXYiLCJuYW1lIjoiRW1yZSIsImxhc3RuYW1lIjoiQmFidXIiLCJpYXQiOjE3MjAzODczMDJ9.SOETxHHYwtv6RZr2alajM2cSnGzWPry3x55Dmx5rcVY",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTcsInVzZXJfaWQiOiJjNTUwNmMyNS1hZWQ3LTQxYTQtODhmYS00ZjhlNTI3ZjIxM2UiLCJyb2xlIjoiY3VzdG9tZXIiLCJlbWFpbCI6ImN1c3RvbWVyQHVzZXIuY29tIiwibmFtZSI6IkVtcmUiLCJsYXN0bmFtZSI6IkJhYnVyIiwiaWF0IjoxNzIyMTIxMjU0fQ._GV-XMrC6D5aqarTukJcldxQEBdRrEtQrY828dSAwMg",
 						"type": "text"
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"action\": \"balanceTransfer\",\n\t\"to_user_id\":\"bd609bb1-a3dd-4090-a30e-8b856d0306ee\",\n\t\"transferred_balance\": 34\n}"
+					"raw": "{\n\t\"action\": \"balanceTransfer\",\n\t\"to_user_id\":\"bd609bb1-a3dd-4090-a30e-8b856d0306ee\",\n\t\"transferred_balance\": 32\n}"
 				},
 				"url": {
 					"raw": "http://localhost:3638/accounting",
@@ -153,15 +238,15 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"action\": \"register\",\n    \"role\": \"admin\",\n    \"email\": \"test@coderemre2.dev\",\n    \"name\": \"Emre\",\n    \"lastname\": \"Babur\",\n    \"password\": \"emrebabur\",\n    \"passwordConfirm\": \"emrebabur\"\n}"
+					"raw": "{\n    \"action\": \"register\",\n    \"role\": \"customer\",\n    \"email\": \"customer@user.com\",\n    \"name\": \"Emre\",\n    \"lastname\": \"Babur\",\n    \"password\": \"emrebabur\",\n    \"passwordConfirm\": \"emrebabur\"\n}"
 				},
 				"url": {
-					"raw": "http://localhost:3636/user",
+					"raw": "http://localhost:3638/user",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "3636",
+					"port": "3638",
 					"path": [
 						"user"
 					]

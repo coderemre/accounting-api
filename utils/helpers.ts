@@ -85,3 +85,17 @@ export const objectKeyDelete = (object: any, key: string) => {
 export const isFunction = (functionName: Function) => {
     return typeof functionName === 'function' ?? false;
 };
+
+export const isFillObject = (array: any) => {
+    return Object.entries(array).length ?? false;
+};
+
+export const checkParams = (datas: any, params: any) => {
+    if (isFillObject(datas)) {
+        const parameters = Object.keys(datas).filter((key: string) => {
+            return params.includes(key);
+        });
+
+        return parameters.length === params.length;
+    }
+};

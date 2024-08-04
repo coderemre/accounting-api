@@ -1,20 +1,42 @@
 import { Request, Response, RequestHandler } from 'express';
 import dotenv from 'dotenv';
 import asyncHandler from '../utils/asyncHandler';
-import { responseError } from '../utils';
-import { ERROR } from '../enums';
+import { responseError, checkJWT } from '../utils';
+import { ERROR, ROLES } from '../enums';
 
 dotenv.config();
+const checkAction = async (req: Request, res: Response, next: Function) => {
+    const user = await checkJWT(String(req?.headers?.userauth) ?? '');
+
+    if (!user) {
+        return next();
+    }
+
+    const roles: any = ROLES;
+
+    if (!roles[user.role]) {
+        return { error: true, message: ERROR.NOT_FOUND.ROLE };
+    }
+
+    if (
+        !roles[user.role]?.active_actions.includes('*') &&
+        !roles[user.role]?.active_actions.includes(String(req.body.action))
+    ) {
+        return responseError(res, ERROR.AUTH.UNAUTHRIZED_USE);
+    }
+
+    return next();
+};
 
 const headerControl: RequestHandler = asyncHandler(async (req: Request, res: Response, next) => {
     if (!req.headers.origin || req.headers.origin === undefined) {
         if (req.headers.token === process.env.TOKEN) {
-            return next();
+            return await checkAction(req, res, next);
         } else {
             return responseError(res, ERROR.AUTH.UNAUTHRIZED);
         }
     } else {
-        return next();
+        return await checkAction(req, res, next);
     }
 });
 

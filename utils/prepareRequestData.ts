@@ -1,10 +1,10 @@
 import { checkJWT } from './helpers';
 
-export const getAppName = (ctx: any) => {
+const getAppName = (ctx: any) => {
     return ctx?.req?.headers?.appname ?? '';
 };
 
-export const getServiceName = (ctx: any) => {
+const getServiceName = (ctx: any) => {
     try {
         return (ctx.path?.split('/') || [])[1] ?? false;
     } catch (error) {
@@ -12,7 +12,7 @@ export const getServiceName = (ctx: any) => {
     }
 };
 
-export const getUser = async (ctx: any) => {
+const getUser = async (ctx: any) => {
     return (await checkJWT(ctx?.req?.headers?.userauth ?? '')) ?? {};
 };
 

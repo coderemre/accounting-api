@@ -1,5 +1,6 @@
-import { getFetchOne, getFetchAll, handleError, isFunction } from '../utils';
+import { getFetchOne, getFetchAll, handleError, isFunction, checkParams } from '../utils';
 import { ERROR, SUCCESS } from '../enums';
+const mysqlx = require('@mysql/xdevapi');
 
 export class Accounting {
     ctx: any;
@@ -29,15 +30,41 @@ export class Accounting {
         }
     }
 
-    async balanceTransfer() {
-        const { schema, datas, user } = this.ctx;
+    async getAllBalance() {
+        const { schema } = this.ctx;
 
         try {
             const userBalancesTable = await schema.getTable('user_balances');
 
+            const userBalance = await userBalancesTable
+                .select(['user_id', 'balance'])
+                .execute()
+                .then(async (res: any) => {
+                    return await getFetchAll(res);
+                });
+
+            return { userBalance };
+        } catch (error: any) {
+            return handleError(error, ERROR.FUNCTION.GET_ALL_BALANCE);
+        }
+    }
+
+    async balanceTransfer() {
+        const { schema, datas, user } = this.ctx;
+
+        try {
+            if (!checkParams(datas, ['to_user_id', 'transferred_balance'])) {
+                return { 0: ERROR.NOT_FOUND.PARAMETER };
+            }
+
+            const { to_user_id, transferred_balance } = datas;
+
+            const userBalancesTable = await schema.getTable('user_balances');
+            const transactionsListTable = await schema.getTable('transactions_list');
+
             const userBalances = await userBalancesTable
                 .select(['user_id', 'balance'])
-                .where(`user_id = "${user.user_id}" OR user_id = "${datas.to_user_id}"`)
+                .where(`user_id = "${user.user_id}" OR user_id = "${to_user_id}"`)
                 .execute()
                 .then(async (res: any) => {
                     return await getFetchAll(res);
@@ -54,12 +81,12 @@ export class Accounting {
                 }
             });
 
-            if (transactionOwner.balance < datas.transferred_balance) {
+            if (transactionOwner.balance < transferred_balance) {
                 return { error: true, message: ERROR.ACCOUNTING.FUNDS };
             }
 
-            transactionOwner.balance -= datas.transferred_balance;
-            transmittedUser.balance += datas.transferred_balance;
+            transactionOwner.balance -= transferred_balance;
+            transmittedUser.balance += transferred_balance;
 
             await userBalancesTable
                 .update()
@@ -73,14 +100,55 @@ export class Accounting {
                 .where(`user_id = '${transmittedUser.user_id}'`)
                 .execute();
 
+            await transactionsListTable
+                .insert(['user_id', 'to_user_id', 'transaction'])
+                .values(user.user_id, to_user_id, transferred_balance)
+                .execute();
+
             return { 0: SUCCESS.PROCESS };
         } catch (error: any) {
             return handleError(error, ERROR.FUNCTION.BALANCE_TRANSFER);
         }
     }
 
+    async loadCredit() {
+        const { schema, datas } = this.ctx;
+
+        try {
+            if (!checkParams(datas, ['balanceValueToUpdate', 'user_id'])) {
+                return { 0: ERROR.NOT_FOUND.PARAMETER };
+            }
+
+            const { balanceValueToUpdate, user_id } = datas;
+
+            const userBalancesTable = await schema.getTable('user_balances');
+
+            const userBalance = await userBalancesTable
+                .select(['balance'])
+                .where(`user_id = "${user_id}"`)
+                .execute()
+                .then(async (res: any) => {
+                    return await getFetchOne(res);
+                });
+
+            if (userBalance?.balance || userBalance?.balance === 0) {
+                await userBalancesTable
+                    .update()
+                    .where(`user_id = "${user_id}"`)
+                    .set('balance', userBalance.balance + balanceValueToUpdate)
+                    .execute();
+            } else {
+                return { 0: ERROR.NOT_FOUND.USER };
+            }
+
+            return { 0: SUCCESS.PROCESS };
+        } catch (error: any) {
+            return handleError(error, ERROR.FUNCTION.LOAD_CREDIT);
+        }
+    }
+
     async init() {
-        const { req, datas } = this.ctx;
+        const { req, datas, user } = this.ctx;
 
         let response = { error: true, message: ERROR.INVALID.ACTION };
 
