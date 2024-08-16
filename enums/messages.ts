@@ -10,6 +10,7 @@ const ERROR = {
         SERVICE: 'Service not found!',
         PARAMETER: 'Parameter not found!',
         ROLE: 'Role not found!',
+        AUTH: 'User Auth not found!',
     },
     INVALID: {
         REQUEST: 'Invalid Request!',

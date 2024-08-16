@@ -7,15 +7,18 @@ import { ERROR, ROLES } from '../enums';
 dotenv.config();
 const checkAction = async (req: Request, res: Response, next: Function) => {
     const user = await checkJWT(String(req?.headers?.userauth) ?? '');
+    const action = req?.body?.action ?? '';
 
-    if (!user) {
+    if (action === 'login' || action === 'register') {
         return next();
+    } else if (!user) {
+        return responseError(res, ERROR.NOT_FOUND.AUTH);
     }
 
     const roles: any = ROLES;
 
     if (!roles[user.role]) {
-        return { error: true, message: ERROR.NOT_FOUND.ROLE };
+        return responseError(res, ERROR.NOT_FOUND.ROLE);
     }
 
     if (
