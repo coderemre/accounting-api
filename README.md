@@ -24,6 +24,23 @@ The API requires the following headers for authentication:
 [Watch Video](https://www.loom.com/share/3b0dbdf9bf1940309c8fc64540f1e38a?sid=0db8ca5d-adb2-49f8-8f56-8765054149f8)
 
 
+### Example DB (Mysql)
+
+##### Transactions List
+![Alt text](./public/screenshots/transactions_list_db_view.png?raw=true "transactions_list_db_view")
+
+##### User Balances
+![Alt text](./public/screenshots/user_balances_db_view.png?raw=true "user_balances_db_view")
+
+##### User Process
+![Alt text](./public/screenshots/user_process_db_view.png?raw=true "user_process_db_view")
+
+
+##### Users
+![Alt text](./public/screenshots/users_db_view.png?raw=true "users_db_view")
+
+
+
 ### Installation
 
 1. Clone the repository:
