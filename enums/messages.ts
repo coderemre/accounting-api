@@ -2,6 +2,13 @@ const SUCCESS = {
     PROCESS: 'Process Successful!',
 };
 
+const ZOD = {
+    DATAS: {
+        balanceValueToUpdate: 'The balance to be loaded must be positive!',
+        dateFormat: "Date format is 'YYYY-MM-DD HH:MM:SS'",
+    },
+};
+
 const ERROR = {
     NOT_FOUND: {
         USER: 'User not found!',
@@ -26,7 +33,7 @@ const ERROR = {
     },
     AUTH: {
         UNAUTHRIZED: 'Unauthorized!',
-        UNAUTHRIZED_USE : 'Unauthorized Use!',
+        UNAUTHRIZED_USE: 'Unauthorized Use!',
     },
     WRONG: {
         PASSWORD: 'Wrong Password!',
@@ -47,4 +54,4 @@ const ERROR = {
     },
 };
 
-export { SUCCESS, ERROR };
+export { SUCCESS, ERROR, ZOD };

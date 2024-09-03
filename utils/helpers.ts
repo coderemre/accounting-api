@@ -1,4 +1,5 @@
 import { ERROR } from '../enums';
+import { z } from 'zod';
 
 export const handleError = async (error: any, msg: string) => {
     let message = error.info ? error.info.msg : msg;
@@ -97,5 +98,11 @@ export const checkParams = (datas: any, params: any) => {
         });
 
         return parameters.length === params.length;
+    }
+};
+
+export const errorCheckWithZod = (error: any) => {
+    if (error instanceof z.ZodError) {
+        return { error: true, message: error.errors };
     }
 };
