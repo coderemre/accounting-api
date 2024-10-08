@@ -11,25 +11,66 @@ The first set of records represents the transactions where the user has sent mon
 
 #### Managing 1 million requests,
 
-* Load Balancer
+* ##### Load Balancer
 
-A load balancer is a solution that acts as a traffic proxy and distributes network or application traffic to endpoints across a set of servers.
+* * A load balancer is a solution that acts as a traffic proxy and distributes network or application traffic to endpoints across a set of servers.
 
-* Horizontal Scaling
 
-Yatay ölçekleme (diğer adıyla ölçekleme), yeni taleplerle başa çıkmak için altyapınıza ek düğümler veya makineler eklemeyi ifade eder.
+* ##### Horizontal Scaling
 
-Yük dengeleyiciyide ki fikir gibi uygulamanın gerektiğinde birden fazla makinede çalışması için bu yöntemi kullanabiliriz.
+* * Horizontal scaling is based on having multiple servers running in parallel, sharing incoming requests or workload. For example, in a web application:
+
+	1.	Load Balancer: It is one of the key components of horizontal scaling. A load balancer distributes incoming requests to the available servers either equally or according to certain rules, ensuring each server operates with a balanced load.
+
+	2.	Running Copies of the Application: For instance, if you are running a Node.js application, you can run copies of the same application on different ports or servers. This way, each server handles a portion of the requests.
 
    
-* Asenkron işlem kuyruğu (Queue)
+* ##### Async Processing (Queue)
 
-Yüksek miktarda gelen iş yükünü daha yönetilebilir parçalara ayırarak arka planda işlemek için kullanılır. Bu yöntem, API sunucusunun hemen yanıt vermesi gereken durumlarla uzun süren işlemleri ayırmanı sağlar. Böylece kullanıcı, uzun süre beklemek zorunda kalmaz ve sunucu üzerindeki yük azalır.
+* * It is used to break down a high volume of incoming workloads into more manageable parts for background processing. This method allows you to separate tasks where the API server needs to respond immediately from those that require longer processing. This way, users do not have to wait for a long time, and the load on the server is reduced.
 
-##### Example Library:
-Bull/BullMQ: Redis tabanlı, yüksek performanslı bir Node.js kuyruk kütüphanesidir. Çok kullanışlı bir API’si vardır ve Redis’in hız avantajlarından yararlanır.
+* *  Example Library: Bull/BullMQ: It is a high-performance, Redis-based queue library for Node.js. It has a very user-friendly API and takes advantage of Redis’s speed benefits.
    
 
+Here, to avoid high initial costs, we can proceed with the Async Processing (Queue) method. Later, if the number of users and constant high request traffic increase, we can implement the Horizontal Scaling method.
+
+You can start with the Async Processing (Queue) method by installing the following package and using a system like in the example below:
+
+[🏗️ bullmq](https://www.npmjs.com/package/bullmq)
+
+
+   ```bash
+   npm install bullmq
+   ```
+
+
+```js
+const { Queue, Worker } = require('bullmq');
+const redisConfig = {
+  connection: {
+    host: 'localhost',
+    port: 6379,
+  },
+};
+
+const queue = new Queue('jobQueue', redisConfig);
+
+queue.add('jobName', { data: 'Some data to process' });
+
+
+const worker = new Worker('jobQueue', async job => {
+  console.log(`Processing job: ${job.name}`);
+}, redisConfig);
+
+worker.on('completed', job => {
+  console.log(`Job with ID ${job.id} has been completed`);
+});
+
+worker.on('failed', (job, err) => {
+  console.error(`Job with ID ${job.id} failed with error ${err.message}`);
+});
+```
+   
 ## Authentication
 
 The API requires the following headers for authentication:
