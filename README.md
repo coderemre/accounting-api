@@ -9,6 +9,27 @@ We can use the transactions_list table to roll back transactions between users. 
 
 The first set of records represents the transactions where the user has sent money, and the second set represents transactions where the user has received money. By merging these two sets, we can determine how much the user has sent to or received from other users over 10,000 transactions. We then adjust the balances: deduct the sent amounts from the receiving users’ accounts and restore the received amounts back to the sending users’ accounts. This process effectively reverses 10,000 transactions (excluding the user’s own deposit/withdrawal activities).
 
+#### Managing 1 million requests,
+
+* Load Balancer
+
+A load balancer is a solution that acts as a traffic proxy and distributes network or application traffic to endpoints across a set of servers.
+
+* Horizontal Scaling
+
+Yatay ölçekleme (diğer adıyla ölçekleme), yeni taleplerle başa çıkmak için altyapınıza ek düğümler veya makineler eklemeyi ifade eder.
+
+Yük dengeleyiciyide ki fikir gibi uygulamanın gerektiğinde birden fazla makinede çalışması için bu yöntemi kullanabiliriz.
+
+   
+* Asenkron işlem kuyruğu (Queue)
+
+Yüksek miktarda gelen iş yükünü daha yönetilebilir parçalara ayırarak arka planda işlemek için kullanılır. Bu yöntem, API sunucusunun hemen yanıt vermesi gereken durumlarla uzun süren işlemleri ayırmanı sağlar. Böylece kullanıcı, uzun süre beklemek zorunda kalmaz ve sunucu üzerindeki yük azalır.
+
+##### Example Library:
+Bull/BullMQ: Redis tabanlı, yüksek performanslı bir Node.js kuyruk kütüphanesidir. Çok kullanışlı bir API’si vardır ve Redis’in hız avantajlarından yararlanır.
+   
+
 ## Authentication
 
 The API requires the following headers for authentication:
