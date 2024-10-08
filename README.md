@@ -4,6 +4,10 @@
 
 The Accounting API provides a set of endpoints for managing user authentication, retrieving account balances, and transferring balances between users. This API uses JSON format for both requests and responses and requires specific headers for authentication.
 
+## Scalability
+We can use the transactions_list table to roll back transactions between users. This table contains details such as which user transferred how much to whom, along with a timestamp. To revert the balance for a user, we retrieve the last 10,000 records where user_id matches the user whose balance needs to be reverted. From these records, we combine those with the same to_user_id. Similarly, we extract records where to_user_id is the user’s ID. (In both queries, we ignore the user’s own transactions like deposits and withdrawals.)
+
+The first set of records represents the transactions where the user has sent money, and the second set represents transactions where the user has received money. By merging these two sets, we can determine how much the user has sent to or received from other users over 10,000 transactions. We then adjust the balances: deduct the sent amounts from the receiving users’ accounts and restore the received amounts back to the sending users’ accounts. This process effectively reverses 10,000 transactions (excluding the user’s own deposit/withdrawal activities).
 
 ## Authentication
 
