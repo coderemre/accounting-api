@@ -23,6 +23,7 @@ const client = mysqlx.getClient(config, {
 connection.getInstance = async (ctx: any) => {
     try {
         const session = await client.getSession();
+
         const schema = ctx.appName ? await session.getSchema(ctx.appName) : '';
 
         ctx = {

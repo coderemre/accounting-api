@@ -146,6 +146,7 @@ export class User {
 
             return { ...responseUser, userAuth };
         } catch (error: any) {
+            console.log(error);
             return handleError(error, ERROR.FUNCTION.LOGIN);
         }
     }

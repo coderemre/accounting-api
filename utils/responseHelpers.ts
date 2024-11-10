@@ -22,7 +22,7 @@ export const response = async (ctx: any, responseData: any) => {
             }
         }
 
-        session.close();
+        session?.close();
 
         return true;
     }

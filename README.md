@@ -116,33 +116,39 @@ The API requires the following headers for authentication:
    cd accounting-api
    ```
 
-2. Pack. Install:
-
-   ```bash
-   yarn
-
-   or
-
-   npm install
-   ```
-
-3. Create .env file:
+2. Create .env file:
 
    JWT_KEY=[YOUR_JWT_KEY]
    TOKEN=[YOUR_TOKEN]
    SALT=[YOUR_SALT]
    PORT=3638
-   DB_HOST=127.0.0.1
+   DB_HOST=db
    DB_USER=[YOUR_DB_USERNAME]
    DB_PASSWORD=[YOUR_DB_PASSWORD]
    DB_PORT=33060
 
-4. Run:
+
+3. Docker:
 
    ```bash
-   yarn dev
+   docker-compose down
 
-   or
+   docker-compose up --build
 
-   npm run dev
+   --------------------------------
+
+   If you want to use the test database;
+
+   docker cp blotuscode.dump my-mysqldb:/blotuscode.sql
+
+   docker exec -it my-mysql-db bash
+
+   mysql -u root -p  
+
+   CREATE DATABASE blotuscode;
+
+   blotuscode < /blotuscode.sql
    ```
+
+![Alt text](./public/screenshots/docker_container.png?raw=true "docker_container")
+![Alt text](./public/screenshots/api_container.png?raw=true "api_container")
