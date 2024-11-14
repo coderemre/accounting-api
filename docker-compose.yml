@@ -1,43 +1,43 @@
 version: '3.8'
 
 services:
-  api:
-    build: .
-    container_name: accounting-api
-    ports:
-      - '3638:3638'
-    env_file: 
-      - .env
-    volumes:
-      - ./:/app
-      - /app/node_modules
-      - /app/dist
-    command: npm run dev
-    depends_on:
-      - db
-    networks:
-      - my-network
+    api:
+        build: .
+        container_name: accounting-api
+        ports:
+            - '${PORT}:${PORT}'
+        env_file:
+            - .env
+        volumes:
+            - ./:/app
+        command: npm run dev
+        depends_on:
+            - db
+        restart: unless-stopped
+        networks:
+            - my-network
 
-  db:
-    image: mysql:8.0
-    container_name: my-mysql-db
-    restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: localtest
-      MYSQL_USER: myuser
-      MYSQL_DATABASE: blotuscode
-      MYSQL_PASSWORD: localtest
-    ports:
-       - '3307:3306'
-       - '33061:33060'
-    volumes:
-      - db_data:/var/lib/mysql
-    networks:
-      - my-network
+    db:
+        image: mysql:8.0
+        container_name: my-mysql-db
+        restart: unless-stopped
+        environment:
+            MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+            MYSQL_USER: ${MYSQL_USER}
+            MYSQL_DATABASE: ${MYSQL_DATABASE}
+            MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+        ports:
+            - '${MYSQL_DOCKER_PORT}:3306'
+            - '${MYSQL_X_DOCKER_PORT}:33060'
+        volumes:
+            - db_data:/var/lib/mysql
+            - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+        networks:
+            - my-network
 
 volumes:
-  db_data:
+    db_data:
 
 networks:
-  my-network:
-    driver: bridge
+    my-network:
+        driver: bridge

@@ -5,10 +5,10 @@ const mysqlx = require('@mysql/xdevapi');
 require('dotenv').config();
 
 const config = {
-    host: process.env.DB_HOST,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    port: process.env.DB_PORT,
+    host: process.env.MYSQL_HOST,
+    user: process.env.MYSQL_USER,
+    password: process.env.MYSQL_ROOT_PASSWORD,
+    port: process.env.MYSQL_PORT,
     connectTimeout: 10000,
 };
 

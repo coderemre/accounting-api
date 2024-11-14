@@ -117,37 +117,36 @@ The API requires the following headers for authentication:
    ```
 
 2. Create .env file:
-
-   JWT_KEY=[YOUR_JWT_KEY]
-   TOKEN=[YOUR_TOKEN]
-   SALT=[YOUR_SALT]
-   PORT=3638
-   DB_HOST=db
-   DB_USER=[YOUR_DB_USERNAME]
-   DB_PASSWORD=[YOUR_DB_PASSWORD]
-   DB_PORT=33060
+  PORT=3638
+  MYSQL_HOST=db
+  MYSQL_PORT=33060
+  TOKEN=[YOUR_TOKEN]
+  SALT=[YOUR_SALT]
+  MYSQL_ROOT_PASSWORD=localtest
+  MYSQL_USER=myuser
+  MYSQL_DATABASE=blotuscode
+  MYSQL_PASSWORD=localtest
+  MYSQL_DOCKER_PORT=3307
+  MYSQL_X_DOCKER_PORT=33061
 
 
 3. Docker:
 
    ```bash
-   docker-compose down
+   $ docker-compose down -v
 
-   docker-compose up --build
+   $ docker-compose up --build
 
    --------------------------------
 
-   If you want to use the test database;
+   If you want to use the test database 
 
-   docker cp blotuscode.dump my-mysqldb:/blotuscode.sql
+   $ docker cp blotuscode.dump my-mysql-db:/blotuscode.sql
 
-   docker exec -it my-mysql-db bash
+   $ docker exec -it my-mysql-db bash
 
-   mysql -u root -p  
+   $ mysql -u root -p blotuscode < /blotuscode.sql
 
-   CREATE DATABASE blotuscode;
-
-   blotuscode < /blotuscode.sql
    ```
 
 ![Alt text](./public/screenshots/docker_container.png?raw=true "docker_container")
